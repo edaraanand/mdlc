@@ -1,0 +1,37 @@
+# values.yaml for the model deployment
+image:
+  repository: "your-docker-repo/model-image"  # Update with your image repository
+  tag: "latest"  # You can dynamically update this in the Jenkins pipeline
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+resources:
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
+
+# Kubernetes service configuration
+service:
+  type: ClusterIP
+  port: 8080  # Port on which your Flask app is exposed
+
+# Optional: Configure Horizontal Pod Autoscaler (HPA)
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
+
+# Ingress configuration (optional)
+ingress:
+  enabled: false
+  annotations: {}
+  hosts:
+    - host: "model.yourdomain.com"  # Your domain for accessing the model service
+      paths:
+        - "/"
+  tls: []
