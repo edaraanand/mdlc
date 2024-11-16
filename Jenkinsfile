@@ -24,9 +24,9 @@ pipeline {
             steps {
                 script {
                     // Set up Python, dependencies, or any other tools
+                    // python3 -m venv venv
+                    // source venv/bin/activate
                     sh '''
-                    python3 -m venv venv
-                    source venv/bin/activate
                     pip install -r requirements.txt
                     '''
                 }
