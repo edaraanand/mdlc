@@ -19,20 +19,21 @@ pipeline {
                 }
             }
         }
-
-        stage('Setup Environment') {
+        stage('Install Dependencies | Setup Environment') {
             steps {
                 script {
-                    // Set up Python, dependencies, or any other tools
+                    // Install Python and pip in the Docker container (for Ubuntu-based images)
+                    // TODO
                     // python3 -m venv venv
                     // source venv/bin/activate
                     sh '''
-                    pip install -r requirements.txt
+                    apt-get update
+                    apt-get install -y python3 python3-pip
+                    pip3 install -r requirements.txt
                     '''
                 }
             }
         }
-
         stage('Train Model') {
             steps {
                 script {
