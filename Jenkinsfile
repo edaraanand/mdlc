@@ -24,9 +24,9 @@ pipeline {
                 script {
                     // Install Python and pip in the Docker container (for Ubuntu-based images)
                     // TODO
-                    // python3 -m venv venv
-                    // source venv/bin/activate
                     sh '''
+                    python3 -m venv smodel1
+                    source smodel1/bin/activate
                     pip3 install -r requirements.txt
                     '''
                 }
