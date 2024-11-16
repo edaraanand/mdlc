@@ -31,7 +31,7 @@ ingress:
   enabled: false
   annotations: {}
   hosts:
-    - host: "model.yourdomain.com"  # Your domain for accessing the model service
+    - host: "smodel1.anandaps.com"  # Your domain for accessing the model service
       paths:
         - "/"
   tls: []
