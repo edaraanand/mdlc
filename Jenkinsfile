@@ -41,6 +41,7 @@ pipeline {
                                 ${CONDA_PATH} activate '${ENV_NAME}'
                                 pip3 install -r requirements.txt
                             """
+                        }
                     }
                 }
             }
