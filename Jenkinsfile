@@ -1,6 +1,6 @@
 pipeline {
     // agent any
-    agent { label 'pg' } 
+    agent { label 'play' } 
 
     environment {
         // Define your environment variables here
@@ -9,6 +9,8 @@ pipeline {
         HELM_RELEASE_NAME = 'model-release'
         K8S_NAMESPACE = 'model-namespace'
         MODEL_PATH = 'src/model'  // Path to your model code
+        ENV_NAME = "myenv"
+        CONDA_PATH = "/root/anaconda3/bin/conda"
     }
 
     stages {
@@ -23,13 +25,23 @@ pipeline {
         stage('Install Dependencies | Setup Environment') {
             steps {
                 script {
-                    // Install Python and pip in the Docker container (for Ubuntu-based images)
-                    // TODO
-                    sh '''
-                    python3 -m venv smodel1
-                    . smodel1/bin/activate
-                    pip3 install -r requirements.txt
-                    '''
+                    script {
+                        // Check if the environment exists
+                        def envExists = sh(script: "conda env list | grep -q ${ENV_NAME}", returnStatus: true)
+                        
+                        // If the environment does not exist, create it
+                        if (envExists != 0) {
+                            echo "Environment '${ENV_NAME}' does not exist. Creating it..."
+                            sh """
+                                ${CONDA_PATH} create --name ${ENV_NAME} python=3.9 -y
+                            """
+                        } else {
+                            echo "Environment '${ENV_NAME}' already exists."
+                            sh """
+                                ${CONDA_PATH} activate '${ENV_NAME}'
+                                pip3 install -r requirements.txt
+                            """
+                    }
                 }
             }
         }

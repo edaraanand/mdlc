@@ -101,3 +101,35 @@ tar xvf openjdk-11+28_linux-x64_bin.tar.gz
 export JAVA_HOME=/path/to/jdk-11
 export PATH=$JAVA_HOME/bin:$PATH
 
+yum install epel-release -y
+sudo yum install python3 -y
+python3 --version
+sudo alternatives --install /usr/bin/python python /usr/bin/python3 1
+sudo yum install python3-pip -y
+pip3 install --upgrade pip
+pip3 --version
+pip install flask==2.1.0
+pip show flask
+
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+chmod +x Miniconda3-latest-Linux-x86_64.sh
+
+eval "$(/root/anaconda3/bin/conda shell.bash hook)"
+conda init
+source ~/.bashrc
+conda --version
+
+usermod -aG root jenkins
+su jenkins
+eval "$(/root/anaconda3/bin/conda shell.bash hook)"
+chmod +x /root/anaconda3/bin/conda
+chown -R jenkins:jenkins /root/anaconda3
+
+conda create --name myenv python=3.9
+conda activate myenv
+python --version
+conda install flask
+
+source /root/anaconda3/bin/activate
+
+
