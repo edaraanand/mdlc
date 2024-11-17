@@ -132,4 +132,8 @@ conda install flask
 
 source /root/anaconda3/bin/activate
 
+visudo
+jenkins ALL=(ALL) NOPASSWD: /root/anaconda3/bin/conda
+
+
 

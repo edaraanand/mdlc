@@ -8,7 +8,7 @@ pipeline {
         DOCKER_TAG = "${env.BRANCH_NAME}-${env.GIT_COMMIT.take(7)}"
         HELM_RELEASE_NAME = 'model-release'
         K8S_NAMESPACE = 'model-namespace'
-        MODEL_PATH = 'src/model'  // Path to your model code
+        MODEL_PATH = './'  // Path to your model code
         ENV_NAME = "myenv"
         CONDA_PATH = "/root/anaconda3/bin/conda"
     }
@@ -33,15 +33,16 @@ pipeline {
                         if (envExists != 0) {
                             echo "Environment '${ENV_NAME}' does not exist. Creating it..."
                             sh """
-                                ${CONDA_PATH} create --name ${ENV_NAME} python=3.9 -y
+                                whoami
+                                sudo ${CONDA_PATH} create --name ${ENV_NAME} python=3.9 -y
                             """
                         } else {
                             echo "Environment '${ENV_NAME}' already exists."
-                            sh """
-                                ${CONDA_PATH} activate '${ENV_NAME}'
-                                pip3 install -r requirements.txt
-                            """
                         }
+                        sh """
+                            sudo ${CONDA_PATH} activate '${ENV_NAME}'
+                            sudo pip3 install -r requirements.txt
+                        """
                     }
                 }
             }
