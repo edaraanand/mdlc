@@ -40,6 +40,8 @@ pipeline {
                             echo "Environment '${ENV_NAME}' already exists."
                         }
                         sh """
+                            sudo /root/anaconda3/bin/conda init bash 
+                            . ~/.bashrc
                             sudo ${CONDA_PATH} activate '${ENV_NAME}'
                             sudo pip3 install -r requirements.txt
                         """
