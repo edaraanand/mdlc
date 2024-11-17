@@ -1,5 +1,6 @@
 pipeline {
-    agent any
+    // agent any
+    agent { label 'pg' } 
 
     environment {
         // Define your environment variables here
@@ -26,7 +27,7 @@ pipeline {
                     // TODO
                     sh '''
                     python3 -m venv smodel1
-                    source smodel1/bin/activate
+                    . smodel1/bin/activate
                     pip3 install -r requirements.txt
                     '''
                 }
@@ -69,6 +70,9 @@ pipeline {
             steps {
                 script {
                     // Push Docker image to your container registry
+                        // Docker Login
+                        // Docker Image Build
+                        // Docker Image Push
                     sh '''
                     docker login -u ${DOCKER_USER} -p ${DOCKER_PASSWORD} ${DOCKER_REGISTRY}
                     docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
